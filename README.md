@@ -1,5 +1,5 @@
 # NP-32046-5-helper
-A rough script to aid the fixing of the PS4 NP-32046-5 error.
+A quick script to aid the fixing of the PS4 NP-32046-5 error.
 
 # Cause
 This error occurs when an attempt to launch a fpkg packaged with encrypted trophies is made.
