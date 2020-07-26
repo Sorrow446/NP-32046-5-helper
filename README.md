@@ -1,6 +1,6 @@
 # NP-32046-5-helper
 A quick script to aid the fixing of the PS4 NP-32046-5 error.
-![](https://orion.feralhosting.com/sorrow/share/helper.jpg)
+![](https://orion.feralhosting.com/sorrow/share/helper.jp)
 
 # Cause
 This error occurs when an attempt to launch a fpkg packaged with encrypted trophies is made.
