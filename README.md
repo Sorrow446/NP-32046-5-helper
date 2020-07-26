@@ -1,5 +1,6 @@
 # NP-32046-5-helper
 A quick script to aid the fixing of the PS4 NP-32046-5 error.
+![](https://orion.feralhosting.com/sorrow/share/helper.jpg)
 
 # Cause
 This error occurs when an attempt to launch a fpkg packaged with encrypted trophies is made.
@@ -14,8 +15,8 @@ This error occurs when an attempt to launch a fpkg packaged with encrypted troph
 - If your game/update dump trophies are encrypted, they'll be replaced with the decrypted ones if all goes well. **Back them up before if you need them.**.
 
 All unencrypted trophies:
-`/user/trophy/`   
+`/user/trophy/`       
 dump (un)encrypted trophies file:
-`<CUSA>\sce_sys\trophy\trophy00.trp`   
+`<CUSA>\sce_sys\trophy\trophy00.trp`      
 Unencrypted trophies file:
 `/user/trophy/conf/<NP communication ID>/TROPHY.TRP`
