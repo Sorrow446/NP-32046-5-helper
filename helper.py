@@ -17,7 +17,7 @@ def trophy_check(troph_abs):
 
 def extract_np(bind_abs):
 	if not os.path.isfile(bind_abs):
-		raise Exception("Bind file is missing: " + bind_abs)
+		raise Exception("Bind file is not present: " + bind_abs)
 	with open(bind_abs, 'rb') as f:
 		data = f.read()
 	np = data[0x84:0x90].decode()
