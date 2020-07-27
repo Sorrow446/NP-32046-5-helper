@@ -17,37 +17,55 @@ def trophy_check(troph_abs):
 
 def extract_np(bind_abs):
 	if not os.path.isfile(bind_abs):
-		raise Exception("Bind file is not present: " + bind_abs)
+		raise Exception("Bind file is missing: " + bind_abs)
+	pos = 0
+	nps = []
 	with open(bind_abs, 'rb') as f:
 		data = f.read()
-	np = data[0x84:0x90].decode()
-	if not re.match('NPWR\d{5}_00', np):
-		raise Exception("Invalid NP com ID. Check your bind file: " + bind_abs)
-	return np
+		while True:
+			pos = data.find(b'\x10\x00\x0c', pos)
+			if pos == -1:
+				break
+			pos += 3
+			f.seek(pos)
+			try:
+				np = f.read(12).decode()
+			except UnicodeDecodeError:
+				raise Exception("Failed to decode NP ID. Check your bind file: " + bind_abs)
+			if not re.match('NPWR\d{5}_00', np):
+				raise Exception("Invalid NP ID. Check your bind file: " + bind_abs)
+			nps.append(np)
+	if not nps:
+		raise Exception("Could not find any NP IDs. Check your bind file: " + bind_abs)
+	return nps
 
-def replace_trophs(dec_troph_abs, troph_abs, np):
-	if os.path.isfile(dec_troph_abs):
-		if trophy_check(dec_troph_abs):
+def replace_trophs(un_troph_abs, troph_abs):
+	if os.path.isfile(un_troph_abs):
+		if trophy_check(un_troph_abs):
 			raise Exception("Trophies are encrypted: {}. "
-							"Was expecting unencrypted ones.".format(dec_troph_abs))
-		print("Unencrypted trophies for {} from PS4 are present: {}."
-			  "".format(np, dec_troph_abs))
-		shutil.copyfile(dec_troph_abs, troph_abs)
+							"Was expecting unencrypted ones.".format(un_troph_abs))
+		print("Unencrypted trophies are present: " + un_troph_abs)
+		shutil.copyfile(un_troph_abs, troph_abs)
 		print("Replaced encrypted trophies.")
 	else:
-		raise Exception("Unencrypted trophies not present: " + dec_troph_abs)
+		raise Exception("Unencrypted trophies not present: " + un_troph_abs)
 
 def main():
 	bind_abs = os.path.join(sys.argv[1], 'sce_sys', 'npbind.dat')
-	troph_abs = os.path.join(sys.argv[1], 'sce_sys', 'trophy', 'trophy00.trp')
-	np = extract_np(bind_abs)
-	print(np)
-	if trophy_check(troph_abs):
-		print("Trophies are encrypted.")
-		dec_troph_abs = os.path.join("trophy", "conf", np, "TROPHY.TRP")
-		replace_trophs(dec_troph_abs, troph_abs, np)
-	else:
-		print("Trophies are already unencrypted.")
+	nps = extract_np(bind_abs)
+	total = len(nps)
+	if total > 1:
+		print("Game uses more than one trophy file.")
+	for num, np in enumerate(nps):
+		print(np)
+		troph_abs = os.path.join(sys.argv[1], 'sce_sys',
+								'trophy', 'trophy{}.trp'.format(str(num).zfill(2)))
+		if trophy_check(troph_abs):
+			print("Trophies are encrypted.")
+			un_troph_abs = os.path.join('trophy', 'conf', np, 'TROPHY.TRP')
+			replace_trophs(un_troph_abs, troph_abs)
+		else:
+			print("Trophies are already unencrypted.")
 
 if __name__ == "__main__":
 	try:
@@ -56,6 +74,6 @@ if __name__ == "__main__":
 		pass
 	try:
 		main()
-	except Exception as e:
+	except Exception:
 		traceback.print_exc()
 	input("\nPress enter to exit.")
