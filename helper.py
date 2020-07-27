@@ -48,13 +48,12 @@ def replace_trophs(un_troph_abs, troph_abs):
 		shutil.copyfile(un_troph_abs, troph_abs)
 		print("Replaced encrypted trophies.")
 	else:
-		raise Exception("Unencrypted trophies not present: " + un_troph_abs)
+		raise Exception("Unencrypted trophies are not present: " + un_troph_abs)
 
 def main():
 	bind_abs = os.path.join(sys.argv[1], 'sce_sys', 'npbind.dat')
 	nps = extract_np(bind_abs)
-	total = len(nps)
-	if total > 1:
+	if len(nps) > 1:
 		print("Game uses more than one trophy file.")
 	for num, np in enumerate(nps):
 		print(np)
