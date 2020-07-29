@@ -8,7 +8,7 @@ This error occurs when an attempt to launch a fpkg packaged with encrypted troph
 # Usage
 1. Copy your unencrypted trophies folder from your PS4 to the same directory as your game/update dump (the entire folder named "trophy").    
 *The FTP payload or PS4-Xplorer is recommended. `/user/trophy/`*
-2. Drag your dump folder onto `helper.py`.
+2. Drag your dump folder onto `helper.py/.exe`.
 
 # Notes
 - The script will abort the trophies copying process if it finds that your original trophies are already unencrypted or your unencrypted trophies for your dump couldn't be found.
