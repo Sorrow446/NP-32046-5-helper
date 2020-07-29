@@ -6,7 +6,7 @@ A quick script to aid with the fixing of the PS4 NP-32046-5 error.
 This error occurs when an attempt to launch a fpkg packaged with encrypted trophies is made.
 
 # Usage
-1. Copy your unencrypted trophies folder from your PS4 to the same directory as your game/update dump (the entire folder named "trophy").`/user/trophy/`  
+1. Copy your unencrypted trophies folder from your PS4 to the same directory as your game/update dump (the entire folder named "trophy"). `/user/trophy/`  
 *The FTP payload or PS4-Xplorer is recommended.*
 2. Drag your dump folder onto `helper.py/.exe`.
 
